@@ -8,20 +8,9 @@
 </head>
 <body>
    
-<h1 align="center" class="cadTaf">Cadastro de Tarefa</h1>
+<h1 align="center" class="cadTaf">Alterar</h1>
     <form method="post" action="TarefaCadastra.php" >
-        <div class="input-group">
-            <label>Nome:</label>
-            <input type="text" name="nome" value="">
-        </div>
-        <div class="input-group">
-            <label>Descrição:</label>
-            <input type="text" name="descricao" value="">
-        </div>
-        <div class="input-group">
-            <label>Prazo:</label>
-            <input type="date" name="prazo" value="">
-        </div>
+    
      
         <div class="input-group">
             
@@ -29,16 +18,14 @@
                     onclick="location.href='TarefaLista.php';">Listar
             </button>
         </div>
-        <div class="input-group">
-         
-                          <fieldset>
-                    <legend>Prioridade:</legend>
+       
+                    <legend>Progresso:</legend>
                     <label>
-                        <input type="radio" name="prioridade" value="baixa" checked />
+                        <input type="radio" name="progresso" value="20" checked />
                         Baixa
-                        <input type="radio" name="prioridade" value="media" />
+                        <input type="radio" name="progresso" value="40" />
                         Média
-                        <input type="radio" name="prioridade" value="alta" />
+                        <input type="radio" name="progresso" value="80" />
                         Alta
                     </label>
                     <br />
@@ -56,14 +43,11 @@
     </form>
     <?php
        if (isset($_POST['alterar'])) {
-           $nome = $_POST['nome'];
-           $descricao = $_POST['descricao'];
-           $prazo = $_POST['prazo'];
-           $prioridade = $_POST['prioridade'];
+           $progresso = $_POST['progresso'];
            $concluido= $_POST['concluida'];
            
            $Tarefa = new Tarefa();
-           $Tarefa->altera($nome,$descricao,$prazo, $prioridade,$concluido);
+           $Tarefa->altera($progresso, $concluido);
            
 
             header('location: TarefaLista.php');

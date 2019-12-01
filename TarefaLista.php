@@ -1,28 +1,13 @@
 ﻿<!DOCTYPE html>
 
--->
+
 <?php  include('Tarefa.php'); ?>
 <html>
     <head>
         <meta charset="UTF-8">
         <title></title>
         <link rel="stylesheet" type="text/css" href="estilo.css">
-        <script type="text/javascript">//<![CDATA[
-
-    window.onload=function(){
-      
-const range = document.querySelector('#range'),
-	progressbar = document.querySelector('.progress-bar');
-  
-  
-range.addEventListener('input', function(){
-	const value = range.value;
-  progressbar.style.setProperty('--progress', value)
-})
-
-    }
-
-  //]]></script>
+       
 
     </head>
     <body>
@@ -34,6 +19,7 @@ range.addEventListener('input', function(){
                     <th>Descrição:</th>
                     <th>Prazo:</th>
                     <th>Prioridade:</th>
+                    <th>Progresso</th>
                     <th colspan="2">Ação</th>
                     
                 </tr>
@@ -48,11 +34,7 @@ range.addEventListener('input', function(){
                     <td><?php echo $lst_Tarefa->getDescricao();?></td>
                     <td><?php echo $lst_Tarefa->getPrazo();?></td>
                     <td><?php echo $lst_Tarefa->getPrioridade();?></td>
-                    <td>
-    <input type="range" min="0" max="100" step="5" value="50" id="range" />
-
-<div class="progress-bar" ></div>
-</td>
+                    <td><?php echo $lst_Tarefa->getProgresso();?></td>
                     <td>
                         <a href="TarefaAltera.php?editar=<?php echo $lst_Tarefa->getNome();?>" class="edit_btn">Alterar</a>
                     </td>
@@ -62,20 +44,6 @@ range.addEventListener('input', function(){
                     </td>
                 </tr>
     
-
-  
-  <script>
-    // tell the embed parent frame the height of the content
-    if (window.parent && window.parent.parent){
-      window.parent.parent.postMessage(["resultsFrame", {
-        height: document.body.getBoundingClientRect().height,
-        slug: "xe5an78y"
-      }], "*")
-    }
-
-    // always overwrite window.name, in case users try to set it manually
-    window.name = "result"
-  </script>
 
             <?php } ?>
             <tfoot>

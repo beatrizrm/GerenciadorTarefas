@@ -42,6 +42,19 @@
                     <br />
                     <br />
                 </fieldset>
+            <fieldset>
+                    <legend>Progresso:</legend>
+                    <label>
+                        <input type="radio" name="progresso" value="20" checked />
+                        20
+                        <input type="radio" name="progresso" value="40" />
+                        40
+                        <input type="radio" name="progresso" value="80" />
+                       80
+                    </label>
+                    <br />
+                    <br />
+                </fieldset>
                 <label>
                     Tarefa concluída:
                     <input type="checkbox" name="concluida" value="sim" />
@@ -58,9 +71,10 @@
            $prazo = $_POST['prazo'];
            $prioridade = $_POST['prioridade'];
            $concluido= $_POST['concluida'];
+           $progresso = $_POST['progresso'];
            
            $Tarefa = new Tarefa();
-           $Tarefa->insere($nome,$descricao,$prazo, $prioridade,$concluido);
+           $Tarefa->insere($nome,$descricao,$prazo, $prioridade,$concluido, $progresso);
            
 
             header('location: TarefaLista.php');
