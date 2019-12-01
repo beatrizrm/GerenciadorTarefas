@@ -6,6 +6,16 @@ private $nome;
 private $descricao;
 private $prazo;
 private $prioridade;
+private $concluido;
+
+function getConcluido() {
+    return $this->concluido;
+}
+
+function setConcluido($concluido) {
+    $this->concluido = $concluido;
+}
+
 
 function getNome() {
     return $this->nome;
@@ -39,16 +49,17 @@ function setPrioridade($prioridade) {
     $this->prioridade = $prioridade;
 }
 
-function __construct($nome = null, $descricao = null, $prazo = null, $prioridade = null) {
+function __construct($nome = null, $descricao = null, $prazo = null, $prioridade = null, $concluido = null) {
     $this->nome = $nome;
     $this->descricao = $descricao;
     $this->prazo = $prazo;
     $this->prioridade = $prioridade;
+    $this->concluido = $concluido;
 }
 
     public function lista(){
         try {
-            $sql  = "SELECT Nome, Descricao, Prazo, Prioridade FROM Tarefa ORDER BY Nome";
+            $sql  = "SELECT Nome, Descricao, Prazo, Prioridade, Concluido FROM Tarefa ORDER BY Nome";
             $conn = ConexaoBD::conecta();
             $sql  = $conn->query($sql);
             $res = array();  
@@ -58,6 +69,7 @@ function __construct($nome = null, $descricao = null, $prazo = null, $prioridade
                 $Tarefa->setDescricao($row->Descricao);
                 $Tarefa->setPrazo($row->Prazo);
                 $Tarefa->setPrioridade($row->Prioridade);
+                  $Tarefa->setConcluido($row->Concluido);
                 $res[] = $Tarefa;
             }
             return $res;
@@ -66,17 +78,17 @@ function __construct($nome = null, $descricao = null, $prazo = null, $prioridade
         }     
     }
     
-    public function consulta($idTarefa){
+    public function consulta($nome){
         try {
-            $sql  = "SELECT IdTarefa, NoTarefa FROM TbTarefa WHERE IdTarefa = ".$idTarefa." ORDER BY NoTarefa";
+            $sql  = "SELECT IdTarefa, Nome FROM TbTarefa WHERE Nome = ".$nome." ORDER BY Nome";
             $conn = ConexaoBD::conecta();
             $sql  = $conn->query($sql);
 
             $res = array();  
             while($row = $sql->fetch(PDO::FETCH_OBJ)) {
                 $Tarefa = new Tarefa();                
-                $Tarefa->setIdTarefa($row->IdTarefa);
-                $Tarefa->setNoTarefa($row->NoTarefa);
+                $Tarefa->setNome($row->Nome);
+                
                 
                 $res[] = $Tarefa;
             }
@@ -86,10 +98,14 @@ function __construct($nome = null, $descricao = null, $prazo = null, $prioridade
         }     
     }
     
-    public function altera($nome, $descricao, $prazo, $prioridade){
+    public function altera($nome, $descricao, $prazo, $prioridade, $concluido){
         try {
             $sql = "UPDATE Tarefa
-                       SET Nome = ? 
+                       SET Nome = ?
+                       SET DESCRICAO =?
+                       SET PRAZO =?
+                       SET PRIORIDADE =?
+                       SET CONCLUIDO=?
                      WHERE Nome = ?"; 
             $conn = ConexaoBD::conecta();
 
@@ -98,6 +114,7 @@ function __construct($nome = null, $descricao = null, $prazo = null, $prioridade
             $stm->bindParam(2, $descricao);
              $stm->bindParam(3, $prazo);
               $stm->bindParam(4, $prioridade);
+              $stm->bindParam(5, $concluido);
             $stm->execute();
             return 1; 
 	} catch (Exception $e) {
@@ -105,10 +122,10 @@ function __construct($nome = null, $descricao = null, $prazo = null, $prioridade
         } //try-catch     
     } //método altera
     
-    public function insere($nome, $descricao, $prazo, $prioridade){
+    public function insere($nome, $descricao, $prazo, $prioridade, $concluido){
       try {
-        $sql = "INSERT INTO Tarefa(nome, descricao, prazo, prioridade)
-                VALUES (?, ?,?,?)";
+        $sql = "INSERT INTO Tarefa(nome, descricao, prazo, prioridade, concluido)
+                VALUES (?, ?,?,?,?)";
         $conn = ConexaoBD::conecta();
 
         $stm  = $conn->prepare($sql);              
@@ -116,6 +133,7 @@ function __construct($nome = null, $descricao = null, $prazo = null, $prioridade
         $stm->bindParam(2, $descricao); 
         $stm->bindParam(3, $prazo); 
         $stm->bindParam(4, $prioridade); 
+         $stm->bindParam(5, $concluido); 
 	$stm->execute();
         return 1;
       } catch (Exception $e) {

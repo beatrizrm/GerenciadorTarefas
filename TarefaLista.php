@@ -1,8 +1,5 @@
 ﻿<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
+
 -->
 <?php  include('Tarefa.php'); ?>
 <html>
@@ -10,9 +7,26 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <title></title>
         <link rel="stylesheet" type="text/css" href="estilo.css">
-        
+        <script type="text/javascript">//<![CDATA[
+
+    window.onload=function(){
+      
+const range = document.querySelector('#range'),
+	progressbar = document.querySelector('.progress-bar');
+  
+  
+range.addEventListener('input', function(){
+	const value = range.value;
+  progressbar.style.setProperty('--progress', value)
+})
+
+    }
+
+  //]]></script>
+
     </head>
     <body>
+        <div>
         <table>
             <thead>
                 <tr>
@@ -21,6 +35,7 @@ and open the template in the editor.
                     <th>Prazo:</th>
                     <th>Prioridade:</th>
                     <th colspan="2">Ação</th>
+                    
                 </tr>
             </thead>
             <h1 align="center">Lista de Tarefas</h1>
@@ -34,6 +49,11 @@ and open the template in the editor.
                     <td><?php echo $lst_Tarefa->getPrazo();?></td>
                     <td><?php echo $lst_Tarefa->getPrioridade();?></td>
                     <td>
+    <input type="range" min="0" max="100" step="5" value="50" id="range" />
+
+<div class="progress-bar" ></div>
+</td>
+                    <td>
                         <a href="TarefaAltera.php?editar=<?php echo $lst_Tarefa->getNome();?>" class="edit_btn">Alterar</a>
                     </td>
                     <td>
@@ -41,6 +61,22 @@ and open the template in the editor.
                            class="del_btn">Remover</a>
                     </td>
                 </tr>
+    
+
+  
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "xe5an78y"
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result"
+  </script>
+
             <?php } ?>
             <tfoot>
                 <td colspan="4" align="center">
@@ -56,6 +92,7 @@ and open the template in the editor.
                     echo $msg;
                 }
             }
-        ?>       
+        ?>   
+        </div>
     </body>
 </html>

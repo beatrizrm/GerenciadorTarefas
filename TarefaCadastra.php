@@ -20,26 +20,47 @@
             <label>Prazo:</label>
             <input type="date" name="prazo" value="">
         </div>
-        <div class="input-group">
-            <label>Prioridade:</label>
-            <input type="number" name="prioridade" value="">
-        </div>
+     
         <div class="input-group">
             <button class="btn" type="submit" name="cadastrar" >Cadastrar</button>
             <button class="btn" name="listar" type="button" 
                     onclick="location.href='TarefaLista.php';">Listar
             </button>
         </div>
-    </form>
+        <div class="input-group">
+         
+                          <fieldset>
+                    <legend>Prioridade:</legend>
+                    <label>
+                        <input type="radio" name="prioridade" value="baixa" checked />
+                        Baixa
+                        <input type="radio" name="prioridade" value="media" />
+                        Média
+                        <input type="radio" name="prioridade" value="alta" />
+                        Alta
+                    </label>
+                    <br />
+                    <br />
+                </fieldset>
+                <label>
+                    Tarefa concluída:
+                    <input type="checkbox" name="concluida" value="sim" />
+                    <br />
+                    <br />
+                </label>
+                <input type="submit" value="Cadastrar" />
+            </fieldset>
+        </div>
     <?php
         if (isset($_POST['cadastrar'])) {
            $nome = $_POST['nome'];
            $descricao = $_POST['descricao'];
            $prazo = $_POST['prazo'];
            $prioridade = $_POST['prioridade'];
+           $concluido= $_POST['concluida'];
            
            $Tarefa = new Tarefa();
-           $Tarefa->insere($nome,$descricao,$prazo, $prioridade);
+           $Tarefa->insere($nome,$descricao,$prazo, $prioridade,$concluido);
            
 
             header('location: TarefaLista.php');

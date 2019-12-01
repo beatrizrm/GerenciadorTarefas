@@ -7,37 +7,64 @@
     
 </head>
 <body>
-    <?php
-        if (isset($_GET['editar'])) {
-            $id = $_GET['editar'];
-            
-            $c = new Tarefa();
-            $Tarefa = $c->consulta($id); 
-            foreach($Tarefa as $lst_Tarefa) {
-                $nome = $lst_Tarefa->getNome();
-            } 
-        }
-    ?>    
-    <h1 align="center">Alteração de Tarefa</h1>    
-    <form method="post" action="TarefaAltera.php" >
-        <div class="input-group">
-            <input type="hidden" name="id" value="<?php echo $id; ?>">
-        </div>
+   
+<h1 align="center" class="cadTaf">Cadastro de Tarefa</h1>
+    <form method="post" action="TarefaCadastra.php" >
         <div class="input-group">
             <label>Nome:</label>
-            <input type="text" name="nome" value="<?php echo $nome; ?>">
+            <input type="text" name="nome" value="">
         </div>
+        <div class="input-group">
+            <label>Descrição:</label>
+            <input type="text" name="descricao" value="">
+        </div>
+        <div class="input-group">
+            <label>Prazo:</label>
+            <input type="date" name="prazo" value="">
+        </div>
+     
+        <div class="input-group">
+            
+            <button class="btn" name="listar" type="button" 
+                    onclick="location.href='TarefaLista.php';">Listar
+            </button>
+        </div>
+        <div class="input-group">
+         
+                          <fieldset>
+                    <legend>Prioridade:</legend>
+                    <label>
+                        <input type="radio" name="prioridade" value="baixa" checked />
+                        Baixa
+                        <input type="radio" name="prioridade" value="media" />
+                        Média
+                        <input type="radio" name="prioridade" value="alta" />
+                        Alta
+                    </label>
+                    <br />
+                    <br />
+                </fieldset>
+                <label>
+                    Tarefa concluída:
+                    <input type="checkbox" name="concluida" value="sim" />
+                    <br />
+                    <br />
+                </label> </div>
         <div class="input-group">
             <button class="btn" type="submit" name="alterar" style="background: #556B2F;" >Alterar</button>
         </div>
     </form>
     <?php
-        if (isset($_POST['alterar'])) {
-            $id = $_POST['id'];
-            $nome = $_POST['nome'];
-            
-            $c = new Tarefa();
-            $c->altera($nome, $id);
+       if (isset($_POST['alterar'])) {
+           $nome = $_POST['nome'];
+           $descricao = $_POST['descricao'];
+           $prazo = $_POST['prazo'];
+           $prioridade = $_POST['prioridade'];
+           $concluido= $_POST['concluida'];
+           
+           $Tarefa = new Tarefa();
+           $Tarefa->altera($nome,$descricao,$prazo, $prioridade,$concluido);
+           
 
             header('location: TarefaLista.php');
         }
